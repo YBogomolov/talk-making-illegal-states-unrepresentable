@@ -1,3 +1,6 @@
+// Credits: Martín Valdés de León
+// https://medium.com/@mvaldesdeleon/using-ixmonad-to-enforce-good-hamburger-building-in-typescript-bcd584236dd4
+
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { IxFunctor3 } from 'fp-ts-indexed-monad/IxFunctor';
 import type { IxPointed3 } from 'fp-ts-indexed-monad/IxPointed';
