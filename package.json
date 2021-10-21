@@ -1,0 +1,41 @@
+{
+  "name": "talk-making-illegal-states-unrepresentable",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Functional TypeScript with fp-ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=15"
+  },
+  "keywords": [
+    "fp-ts",
+    "ts",
+    "fp"
+  ],
+  "author": "Yuriy Bogomolov <yuriy.bogomolov@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fp-ts": "^2.11.4",
+    "fp-ts-contrib": "^0.1.26",
+    "fp-ts-indexed-monad": "^2.10.3",
+    "fp-ts-std": "^0.11.0",
+    "io-ts": "^2.2.16",
+    "io-ts-types": "^0.5.16",
+    "monocle-ts": "^2.3.11"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^4.31.2",
+    "@typescript-eslint/parser": "^4.31.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-fp-ts": "^0.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.3"
+  }
+}
