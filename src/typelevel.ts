@@ -56,7 +56,26 @@ console.log(user);
 type OrderId = string;
 type OrderState = 'active' | 'deleted';
 
-export type AtLeastOne<T, Keys extends keyof T = keyof T> = Partial<T> & { [K in Keys]: Required<Pick<T, K>> }[Keys];
+//Construct type with all required keys and at least one of other
+export type AtLeastOne<T, RequiredKeys extends keyof T = keyof T> = Required<Pick<T, RequiredKeys>> & { [K in Exclude<keyof T, RequiredKeys> ]: Record<K, T[K]> }[Exclude<keyof T, RequiredKeys>];
+
+export type IsTrue<T extends true> = T;
+
+export type IsFalse<T extends false> = T;
+
+export type IfExtends<T, U, TOnTrue = true, TonFalse = false> = T extends U ? TOnTrue : TonFalse;
+
+type Issuer01 = {
+    a: string, 
+    b: number,
+    c: boolean
+}
+
+type TEST_CASE_ATLEASTONE = [
+    IsFalse<IfExtends<{ a: string }, AtLeastOne<Issuer01, 'a'>>>,
+    IsTrue<IfExtends<{ a: string, b: number }, AtLeastOne<Issuer01, 'a'>>>,
+    IsFalse<IfExtends<{ a: string, b: number }, AtLeastOne<Issuer01, 'a' | 'b'>>>,
+]
 
 interface Order {
   readonly id: OrderId;
@@ -66,17 +85,17 @@ interface Order {
   readonly state: OrderState;
 }
 
-type OrderUpdate = AtLeastOne<Omit<Order, 'id'>>;
+type OrderUpdate = AtLeastOne<Order, 'id'>;
 
-const updateOrder = (id: OrderId, update: OrderUpdate): boolean => {
-  console.log({ id, update });
+const updateOrder = (update: OrderUpdate): boolean => {
+  console.log({ update });
   return true;
 };
 
 const orderId: OrderId = '1';
 
-updateOrder(orderId, {}); // ✅ Property 'state' is missing in type '{}' but required in type 'Required<Pick<Omit<Order, "id">, "state">>'
-updateOrder(orderId, { comment: 'Ship, please' }); // ✅ Compiles
-updateOrder(orderId, { date: new Date() }); // ✅ Compiles
-updateOrder(orderId, { state: 'deleted' }); // ✅ Compiles
-updateOrder(orderId, { id: orderId }); // ✅ Object literal may only specify known properties, and 'id' does not exist in type 'OrderUpdate'.
+updateOrder({}); // ❌ Property 'state' is missing in type '{}' but required in type 'Required<Pick<Omit<Order, "id">, "state">>'
+updateOrder({ id: orderId, comment: 'Ship, please' }); // ✅ Compiles
+updateOrder({ id: orderId, date: new Date() }); // ✅ Compiles
+updateOrder({ id: orderId, state: 'deleted' }); // ✅ Compiles
+updateOrder({ id: orderId }); // ❌ Object literal may only specify known properties, and 'id' does not exist in type 'OrderUpdate'.
