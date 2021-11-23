@@ -75,8 +75,8 @@ const updateOrder = (id: OrderId, update: OrderUpdate): boolean => {
 
 const orderId: OrderId = '1';
 
-updateOrder(orderId, {}); // ✅ Property 'state' is missing in type '{}' but required in type 'Required<Pick<Omit<Order, "id">, "state">>'
+updateOrder(orderId, {}); // ❌ Property 'state' is missing in type '{}' but required in type 'Required<Pick<Omit<Order, "id">, "state">>'
 updateOrder(orderId, { comment: 'Ship, please' }); // ✅ Compiles
 updateOrder(orderId, { date: new Date() }); // ✅ Compiles
 updateOrder(orderId, { state: 'deleted' }); // ✅ Compiles
-updateOrder(orderId, { id: orderId }); // ✅ Object literal may only specify known properties, and 'id' does not exist in type 'OrderUpdate'.
+updateOrder(orderId, { id: orderId }); // ❌ Object literal may only specify known properties, and 'id' does not exist in type 'OrderUpdate'.
